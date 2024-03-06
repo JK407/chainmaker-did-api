@@ -6,3 +6,19 @@ type Request struct {
 
 type Response struct {
 }
+
+type NewAccountRequest struct {
+	Algo string `form:"algo"`
+	Name string `form:"name"`
+}
+
+type NewAccountData struct {
+	PubKeyPath  string `json:"pub_key_path"`
+	PrivKeyPath string `json:"priv_key_path"`
+}
+
+type NewAccountResponse struct {
+	Code int            `json:"code"`
+	Msg  string         `json:"msg"`
+	Data NewAccountData `json:"data"`
+}

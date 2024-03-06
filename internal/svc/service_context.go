@@ -7,8 +7,8 @@ import (
 )
 
 type ServiceContext struct {
-	Config      config.Config
-	ChainClient *sdk.ChainClient
+	Config   config.Config
+	CmClient *sdk.ChainClient
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -21,7 +21,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		panic(e)
 	}
 	return &ServiceContext{
-		Config:      c,
-		ChainClient: cmc,
+		Config:   c,
+		CmClient: cmc,
 	}
 }

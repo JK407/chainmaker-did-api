@@ -4,4 +4,4 @@ Port: 8888
 
 
 
-SdkConfigPath: ../chainconfig/sdk_config.yml
+SdkConfigPath: ./chainconfig/sdk_config.yml

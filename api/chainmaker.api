@@ -15,10 +15,31 @@ type response {
 	// TODO: add members here and delete this comment
 }
 
+type (
+	NewAccountRequest {
+		Algo string `form:"algo"`
+		Name string `form:"name"`
+	}
+
+	NewAccountData {
+		PubKeyPath  string `json:"pub_key_path"`
+		PrivKeyPath string `json:"priv_key_path"`
+	}
+
+	NewAccountResponse {
+		Code int            `json:"code"`
+		Msg  string         `json:"msg"`
+		Data NewAccountData `json:"data"`
+	}
+)
+
 service chainmaker-api {
 	@handler GetUser // TODO: set handler name and delete this comment
 	get /users/id/:userId(request) returns(response)
 
 	@handler CreateUser // TODO: set handler name and delete this comment
 	post /users/create(request)
+
+	@handler NewAccount // 创建账户
+	post /account/new(NewAccountRequest) returns(NewAccountResponse)
 }
