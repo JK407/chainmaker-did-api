@@ -10,5 +10,7 @@ const sdkConfigOrg1Client1Path = "../chainconfig/sdk_config.yml"
 func TestCMC(t *testing.T) {
 	cmc, err := CreateCMClient(sdkConfigOrg1Client1Path)
 	assert.NoError(t, err)
-	t.Logf("ChainMakerClient:%v", cmc)
+	info, err := cmc.GetChainInfo()
+	assert.NoError(t, err)
+	t.Logf("ChainMakerInfo:%v", info)
 }

@@ -18,9 +18,6 @@ func CreateCMClient(sdkConfigPath string, opts ...sdk.ChainClientOption) (*sdk.C
 	if err != nil {
 		return nil, err
 	}
-	_, err = client.GetChainInfo()
-	if err != nil {
-		return nil, err
-	}
+
 	return client, nil
 }
