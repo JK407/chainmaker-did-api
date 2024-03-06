@@ -30,7 +30,7 @@ func NewNewAccountLogic(ctx context.Context, svcCtx *svc.ServiceContext) *NewAcc
 
 func (l *NewAccountLogic) NewAccount(req *types.NewAccountRequest) (resp *types.NewAccountResponse, err error) {
 	// 根据名称创建文件夹
-	dir := fmt.Sprintf("./%s", req.Name)
+	dir := fmt.Sprintf("./accounts/%s", req.Name)
 	if err = os.MkdirAll(dir, 0755); err != nil {
 		resp = &types.NewAccountResponse{
 			Code: -1,
@@ -47,7 +47,8 @@ func (l *NewAccountLogic) NewAccount(req *types.NewAccountRequest) (resp *types.
 		}
 		return resp, nil
 	}
-	prvKeyPath := filepath.Join(dir, fmt.Sprintf("%s.key", req.Name))
+	//prvKeyPath := filepath.Join(dir, fmt.Sprintf("%s.key", req.Name))
+	prvKeyPath := filepath.ToSlash(filepath.Join(dir, fmt.Sprintf("%s.key", req.Name)))
 
 	// 生成公钥
 	if err = l.keyService.ExportPublicKey(prvKeyPath, dir, req.Name); err != nil {
@@ -57,7 +58,8 @@ func (l *NewAccountLogic) NewAccount(req *types.NewAccountRequest) (resp *types.
 		}
 		return resp, nil
 	}
-	pubKeyPath := filepath.Join(dir, fmt.Sprintf("%s.pem", req.Name))
+	//pubKeyPath := filepath.Join(dir, fmt.Sprintf("%s.pem", req.Name))
+	pubKeyPath := filepath.ToSlash(filepath.Join(dir, fmt.Sprintf("%s.pem", req.Name)))
 
 	// 返回成功响应
 	resp = &types.NewAccountResponse{
