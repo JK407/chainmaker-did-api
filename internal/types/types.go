@@ -18,7 +18,7 @@ type NewAccountData struct {
 }
 
 type NewAccountResponse struct {
-	Code int            `json:"code"`
-	Msg  string         `json:"msg"`
-	Data NewAccountData `json:"data"`
+	Code int             `json:"code"`
+	Msg  string          `json:"msg"`
+	Data *NewAccountData `json:"data,omitempty"`
 }

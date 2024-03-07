@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"chainmaker-did-api/constants"
 	"chainmaker-did-api/internal/service/key"
 	"chainmaker-did-api/internal/svc"
 	"chainmaker-did-api/internal/types"
@@ -32,43 +33,29 @@ func (l *NewAccountLogic) NewAccount(req *types.NewAccountRequest) (resp *types.
 	// 根据名称创建文件夹
 	dir := fmt.Sprintf("./accounts/%s", req.Name)
 	if err = os.MkdirAll(dir, 0755); err != nil {
-		resp = &types.NewAccountResponse{
-			Code: -1,
-			Msg:  err.Error(),
-		}
-		return resp, nil
+		// todo log
+		return &constants.MkdirAllError, nil
 	}
 
 	// 生成私钥
 	if err = l.keyService.GenerateKey(req.Algo, dir, req.Name); err != nil {
-		resp = &types.NewAccountResponse{
-			Code: -1,
-			Msg:  err.Error(),
-		}
-		return resp, nil
+		// todo log
+		return &constants.GenerateKeyError, nil
 	}
 	//prvKeyPath := filepath.Join(dir, fmt.Sprintf("%s.key", req.Name))
 	prvKeyPath := filepath.ToSlash(filepath.Join(dir, fmt.Sprintf("%s.key", req.Name)))
 
 	// 生成公钥
 	if err = l.keyService.ExportPublicKey(prvKeyPath, dir, req.Name); err != nil {
-		resp = &types.NewAccountResponse{
-			Code: -1,
-			Msg:  err.Error(),
-		}
-		return resp, nil
+		// todo log
+		return &constants.ExportPublicKeyError, nil
 	}
 	//pubKeyPath := filepath.Join(dir, fmt.Sprintf("%s.pem", req.Name))
 	pubKeyPath := filepath.ToSlash(filepath.Join(dir, fmt.Sprintf("%s.pem", req.Name)))
 
-	// 返回成功响应
-	resp = &types.NewAccountResponse{
-		Code: 0,
-		Msg:  "Account created successfully",
-		Data: types.NewAccountData{
-			PrivKeyPath: prvKeyPath,
-			PubKeyPath:  pubKeyPath,
-		},
-	}
-	return resp, nil
+	r := constants.NewAccountSuccess.SetData(types.NewAccountData{
+		PrivKeyPath: prvKeyPath,
+		PubKeyPath:  pubKeyPath,
+	})
+	return &r, nil
 }

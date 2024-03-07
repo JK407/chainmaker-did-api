@@ -27,9 +27,9 @@ type (
 	}
 
 	NewAccountResponse {
-		Code int            `json:"code"`
-		Msg  string         `json:"msg"`
-		Data NewAccountData `json:"data"`
+		Code int             `json:"code"`
+		Msg  string          `json:"msg"`
+		Data *NewAccountData `json:"data,omitempty"` // 为空时不返回
 	}
 )
 
