@@ -9,6 +9,7 @@ type NewAccountRequest struct {
 type NewAccountData struct {
 	PubKeyPath  string `json:"pub_key_path"`
 	PrivKeyPath string `json:"priv_key_path"`
+	Address     string `json:"address"`
 }
 
 type NewAccountResponse struct {

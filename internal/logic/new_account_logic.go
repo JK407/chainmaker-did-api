@@ -2,6 +2,7 @@ package logic
 
 import (
 	"chainmaker-did-api/constants"
+	"chainmaker-did-api/internal/service/did"
 	"chainmaker-did-api/internal/service/key"
 	"chainmaker-did-api/internal/svc"
 	"chainmaker-did-api/internal/types"
@@ -18,6 +19,7 @@ type NewAccountLogic struct {
 	ctx        context.Context
 	svcCtx     *svc.ServiceContext
 	keyService key.KeyService
+	didService did.DidService
 }
 
 func NewNewAccountLogic(ctx context.Context, svcCtx *svc.ServiceContext) *NewAccountLogic {
@@ -26,6 +28,7 @@ func NewNewAccountLogic(ctx context.Context, svcCtx *svc.ServiceContext) *NewAcc
 		ctx:        ctx,
 		svcCtx:     svcCtx,
 		keyService: key.NewKeyService(),
+		didService: did.NewDidService(),
 	}
 }
 
@@ -52,10 +55,14 @@ func (l *NewAccountLogic) NewAccount(req *types.NewAccountRequest) (resp *types.
 	}
 	//pubKeyPath := filepath.Join(dir, fmt.Sprintf("%s.pem", req.Name))
 	pubKeyPath := filepath.ToSlash(filepath.Join(dir, fmt.Sprintf("%s.pem", req.Name)))
-	l.Logger.Infof("success to create new account.")
+
+	accountPubKey := l.didService.GetPubKey(pubKeyPath)
+	accountAddress := l.didService.GetAddress(accountPubKey)
+	l.Logger.Infof("create new account success,account address: %s", accountAddress)
 	r := constants.NewAccountSuccess.SetData(types.NewAccountData{
 		PrivKeyPath: prvKeyPath,
 		PubKeyPath:  pubKeyPath,
+		Address:     accountAddress,
 	})
 	return &r, nil
 }
