@@ -15,3 +15,7 @@ goctl api go --api .\api\chainmaker.api --style=go_zero -dir ./
 curl --location '127.0.0.1:8888/account/new' \
 --form 'algo="SM2"' \
 --form 'name="user"'
+```
+
+
+- [ ] GenerateDoc // 生成文档
