@@ -7,14 +7,6 @@ info (
 	email: "1467511770@qq.com"
 )
 
-type request {
-	// TODO: add members here and delete this comment
-}
-
-type response {
-	// TODO: add members here and delete this comment
-}
-
 type (
 	NewAccountRequest {
 		Algo string `form:"algo"`
@@ -34,12 +26,6 @@ type (
 )
 
 service chainmaker-api {
-	@handler GetUser // TODO: set handler name and delete this comment
-	get /users/id/:userId(request) returns(response)
-
-	@handler CreateUser // TODO: set handler name and delete this comment
-	post /users/create(request)
-
 	@handler NewAccount // 创建账户
 	post /account/new(NewAccountRequest) returns(NewAccountResponse)
 }
