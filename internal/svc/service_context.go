@@ -16,10 +16,11 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	if e != nil {
 		panic(e)
 	}
-	//_, e = cmc.GetChainInfo()
+	//l, e := cmc.GetChainInfo()
 	//if e != nil {
 	//	panic(e)
 	//}
+	//fmt.Println(l)
 	return &ServiceContext{
 		Config:   c,
 		CmClient: cmc,
