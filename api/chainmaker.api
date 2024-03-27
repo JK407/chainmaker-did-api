@@ -29,4 +29,5 @@ type (
 service chainmaker-api {
 	@handler NewAccount // 创建账户
 	post /account/new(NewAccountRequest) returns(NewAccountResponse)
+
 }

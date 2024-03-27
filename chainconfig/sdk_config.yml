@@ -14,7 +14,7 @@ chain_client:
 
   nodes:
     - # 节点地址，格式为：IP:端口:连接数
-      node_addr: "123.60.190.27:12301"
+      node_addr: "106.15.60.103:12301"
       # 节点连接数
       conn_cnt: 10
 
